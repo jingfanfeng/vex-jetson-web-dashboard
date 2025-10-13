@@ -1,7 +1,12 @@
 import { EventEmitter } from "events";
 import { io, Socket } from "socket.io-client";
 import { encode, decode } from "@msgpack/msgpack";
-import { ColorCorrection, DataResponse, Offset } from "../lib/data-response";
+import {
+  ColorCorrection,
+  DataResponse,
+  Offset,
+  deserializeDataResponse,
+} from "../lib/data-response";
 import { config } from "../util/config";
 import { commands } from "../lib/commands";
 
@@ -38,8 +43,7 @@ export class DataService extends EventEmitter {
   }
 
   private handleMessage = (payload: unknown) => {
-    const response = payload as DataResponse;
-
+    const response = deserializeDataResponse(payload);
     if (!response) {
       return;
     }
