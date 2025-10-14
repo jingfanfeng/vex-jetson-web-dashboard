@@ -4,9 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --mode=development --hot --progress",
+        "start": "react-scripts start",
         "dev": "cross-env NODE_ENV=development npx webpack-dev-server --progress --hot",
-        "build": "webpack --mode=production",
+        "build": "react-scripts build",
         "prod": "webpack --mode=production"
     },
     "author": "",
