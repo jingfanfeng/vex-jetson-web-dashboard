@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import Field from "../components/field/field";
 import { commands } from "../lib/commands";
 import { useAppSelector } from "../state/hooks";
@@ -19,7 +19,7 @@ const FieldView = () => {
   }, [dataService]);
 
   return (
-    <Grid item xs={12}>
+    <Grid size={12}>
       <Field />
     </Grid>
   );

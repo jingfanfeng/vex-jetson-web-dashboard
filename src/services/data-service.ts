@@ -1,6 +1,6 @@
 import EventEmitter from "eventemitter3";
 import { io, Socket } from "socket.io-client";
-import { encode, decode } from "@msgpack/msgpack";
+import { decode } from "@msgpack/msgpack";
 import {
   ColorCorrection,
   DataResponse,
@@ -42,8 +42,22 @@ export class DataService extends EventEmitter<DataServiceEvents> {
     this.createSocketConnection();
   }
 
+  private decodePayload = (payload: unknown): unknown => {
+    if (payload instanceof ArrayBuffer) {
+      return decode(new Uint8Array(payload));
+    }
+
+    if (ArrayBuffer.isView(payload)) {
+      const view = payload as ArrayBufferView;
+      return decode(new Uint8Array(view.buffer, view.byteOffset, view.byteLength));
+    }
+
+    return payload;
+  };
+
   private handleMessage = (payload: unknown) => {
-    const response = deserializeDataResponse(payload);
+    const decoded = this.decodePayload(payload);
+    const response = deserializeDataResponse(decoded);
     if (!response) {
       return;
     }
@@ -99,7 +113,6 @@ export class DataService extends EventEmitter<DataServiceEvents> {
 
     const socket = io(`http://${this.ip}:${this.port}`, {
       transports: ["websocket"],
-      parser: { encode, decode },
       autoConnect: true,
     });
 

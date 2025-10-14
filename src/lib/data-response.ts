@@ -154,15 +154,23 @@ const utf8Decoder =
 
 let decoderPatched = false;
 
+type DecodeBinaryFn = (
+  this: Decoder,
+  byteLength: number,
+  headOffset: number
+) => unknown;
+
 function patchDecoderForBinaryKeys(): void {
   if (decoderPatched) {
     return;
   }
 
-  const originalDecodeBinary = Decoder.prototype.decodeBinary;
+  const originalDecodeBinary = (
+    Decoder.prototype as unknown as { decodeBinary: DecodeBinaryFn }
+  ).decodeBinary;
 
   (Decoder.prototype as unknown as {
-    decodeBinary: typeof originalDecodeBinary;
+    decodeBinary: DecodeBinaryFn;
   }).decodeBinary = function patchedDecodeBinary(
     this: Decoder,
     byteLength: number,

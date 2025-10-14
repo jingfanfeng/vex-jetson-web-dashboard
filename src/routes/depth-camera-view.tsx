@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import { commands } from "../lib/commands";
 import { useAppSelector } from "../state/hooks";
 import DepthCamera from "../components/cameras/depth-camera";
@@ -19,7 +19,7 @@ const DepthCameraView = () => {
   }, [dataService]);
 
   return (
-    <Grid item xs={12}>
+    <Grid size={12}>
       <DepthCamera />
     </Grid>
   );

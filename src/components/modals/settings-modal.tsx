@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Grid from "@mui/material/Grid";
 import {
-  Grid,
   Box,
   Modal,
   Typography,
@@ -145,7 +145,7 @@ const SettingsModal = () => {
     >
       <Box sx={style}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Box sx={{ flexGrow: 1 }}>
               <Toolbar>
                 <Typography
@@ -180,7 +180,7 @@ const SettingsModal = () => {
               </Toolbar>
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={6}>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -224,7 +224,7 @@ const SettingsModal = () => {
               />
             </FormGroup>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={6}>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -248,7 +248,7 @@ const SettingsModal = () => {
               />
             </FormGroup>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography
               id="demo-radio-buttons-group-label"
               sx={{ color: theme.font, marginTop: 2 }}
@@ -256,7 +256,7 @@ const SettingsModal = () => {
               Camera Offset
             </Typography>
             <Grid container spacing={1}>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
@@ -278,7 +278,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
@@ -300,7 +300,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
@@ -322,7 +322,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
@@ -344,7 +344,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
@@ -366,7 +366,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <Button
                   onClick={() => {
                     dataService.setCameraOffset(
@@ -395,7 +395,7 @@ const SettingsModal = () => {
               GPS Offset
             </Typography>
             <Grid container spacing={1}>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
@@ -416,7 +416,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
@@ -437,7 +437,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
@@ -458,7 +458,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
@@ -479,7 +479,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <Button
                   onClick={() => {
                     dataService.setGpsOffset(
@@ -508,7 +508,7 @@ const SettingsModal = () => {
               Color Correction
             </Typography> */}
             <Grid container spacing={3}>
-              <Grid item xs>
+              <Grid size="grow">
                 <Typography
                 id="demo-radio-buttons-group-label"
                 sx={{ color: theme.font, marginTop: 2 }}
@@ -534,7 +534,7 @@ const SettingsModal = () => {
                   sx={{color: theme.control}}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <Typography
                   id="demo-radio-buttons-group-label"
                   sx={{ color: theme.font, marginTop: 2 }}
@@ -560,7 +560,7 @@ const SettingsModal = () => {
                     sx={{color: theme.control}}
                   />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <Typography
                   id="demo-radio-buttons-group-label"
                   sx={{ color: theme.font, marginTop: 2 }}
@@ -586,7 +586,7 @@ const SettingsModal = () => {
                     sx={{color: theme.control}}
                   />
               </Grid>
-              <Grid item xs marginRight={-13}>
+              <Grid size="auto" marginRight={-13}>
                 <Button
                   onClick={() => {
                     dataService.setColorCorrection(
@@ -607,7 +607,7 @@ const SettingsModal = () => {
                   Save
                 </Button>
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <Button
                   onClick={() => {
                     dataService.setColorCorrection(
@@ -630,9 +630,9 @@ const SettingsModal = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} sx={{ marginTop: 3 }}>
+          <Grid size={12} sx={{ marginTop: 3 }}>
             <Grid container spacing={1}>
-              <Grid item>
+              <Grid>
                 <StyledTextField
                   onChange={(e) => {
                     dispatch(setSocketIp(e.target.value));
@@ -645,7 +645,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <StyledTextField
                   onChange={(e) => {
                     dispatch(setSocketPort(e.target.value));
@@ -658,7 +658,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid size="grow">
                 <Button
                   onClick={() => {
                     dataService.ip = socketIp;
