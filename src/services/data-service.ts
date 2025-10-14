@@ -182,7 +182,7 @@ export class DataService extends EventEmitter<DataServiceEvents> {
   public send = (command: string) => {
     try {
       if (this.socket?.connected) {
-        this.socket.emit("message", command);
+        this.socket.emit("message", { message: command });
       }
     } catch (ex) {
       console.log(`[Data Service] Failed to send websocket message - ${ex}`);
@@ -194,7 +194,7 @@ export class DataService extends EventEmitter<DataServiceEvents> {
    */
   public getCameraOffset = () => {
     try {
-      this.socket?.emit("message", commands.gGetCameraOffset);
+      this.socket?.emit("message", { message: commands.gGetCameraOffset });
     } catch (ex) {
       console.log(`Failed to get camera offset ${ex}`);
     }
@@ -205,7 +205,7 @@ export class DataService extends EventEmitter<DataServiceEvents> {
    */
   public getGpsOffset = () => {
     try {
-      this.socket?.emit("message", commands.gGetGpsOffset);
+      this.socket?.emit("message", { message: commands.gGetGpsOffset });
     } catch (ex) {
       console.log(`Failed to get gps offset ${ex}`);
     }
@@ -213,7 +213,7 @@ export class DataService extends EventEmitter<DataServiceEvents> {
 
   public getColorCorrection = () => {
     try {
-      this.socket?.emit("message", commands.gGetColorCorrection);
+      this.socket?.emit("message", { message: commands.gGetColorCorrection });
     } catch (ex) {
       console.log(`Failed to get color correction ${ex}`)
     }
@@ -224,7 +224,7 @@ export class DataService extends EventEmitter<DataServiceEvents> {
    */
   public setCameraOffset = (offset: string) => {
     try {
-      this.socket?.emit("message", `${commands.gSetCameraOffset},${offset}`);
+      this.socket?.emit("message", { message: `${commands.gSetCameraOffset},${offset}` });
     } catch (ex) {
       console.log(`Failed to set camera offset ${ex}`);
     }
@@ -235,7 +235,7 @@ export class DataService extends EventEmitter<DataServiceEvents> {
    */
   public setGpsOffset = (offset: string) => {
     try {
-      this.socket?.emit("message", `${commands.gSetGpsOffset},${offset}`);
+      this.socket?.emit("message", { message: `${commands.gSetGpsOffset},${offset}` });
     } catch (ex) {
       console.log(`Failed to set gps offset ${ex}`);
     }
@@ -243,7 +243,7 @@ export class DataService extends EventEmitter<DataServiceEvents> {
 
   public setColorCorrection = (colorCorrection: string) => {
     try {
-      this.socket?.emit("message", `${commands.gSetColorCorrection},${colorCorrection}`);
+      this.socket?.emit("message", { message: `${commands.gSetColorCorrection},${colorCorrection}` });
     } catch (ex) {
       console.log(`Failed to set color correction ${ex}`)
     }
