@@ -22,7 +22,7 @@ export const config = {
    * Rate at which the data services polls for data (ms)
    */
   pollingInterval: 60,
-  logDataResponse: false,
+  logDataResponse: true,
   detectOutOfBoundsElements: true,
   colors: {
     red: "#D22630",

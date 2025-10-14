@@ -20,24 +20,24 @@ const Stats = () => {
 
   useEffect(() => {
     if (response && response.stats) {
-      const h = Math.floor(response.stats.runTime / 3600);
-      const m = Math.floor(response.stats.runTime / 60) - h * 60;
-      const s = Math.floor(response.stats.runTime % 60);
+      const h = Math.floor(response.stats.run_time / 3600);
+      const m = Math.floor(response.stats.run_time / 60) - h * 60;
+      const s = Math.floor(response.stats.run_time % 60);
       setRunTime(
         `${h < 10 ? "0" : ""}${h}:${m < 10 ? "0" : ""}${m}:${
           s < 10 ? "0" : ""
         }${s}`
       );
-      if (response.stats.cpuTempurature < 40) {
+      if (response.stats.cpu_temp < 40) {
         setCpuTempColor("green");
       } else if (
-        response.stats.cpuTempurature >= 40 &&
-        response.stats.cpuTempurature < 50
+        response.stats.cpu_temp >= 40 &&
+        response.stats.cpu_temp < 50
       ) {
         setCpuTempColor("yellow");
       } else if (
-        response.stats.cpuTempurature >= 50 &&
-        response.stats.cpuTempurature < 60
+        response.stats.cpu_temp >= 50 &&
+        response.stats.cpu_temp < 60
       ) {
         setCpuTempColor("orange");
       } else {
@@ -54,12 +54,12 @@ const Stats = () => {
         <>
           <Tooltip
             title={
-              response.stats.gpsConnected ? "GPS Connected" : "GPS Disconnected"
+              response.stats.gps_connected ? "GPS Connected" : "GPS Disconnected"
             }
             placement="right"
           >
             <ListItem>
-              {response.stats.gpsConnected ? (
+              {response.stats.gps_connected ? (
                 <GpsFixedIcon sx={{ color: "green", paddingLeft: "3.7px" }} />
               ) : (
                 <GpsOffIcon sx={{ color: "red", paddingLeft: "3.7px" }} />
@@ -73,7 +73,7 @@ const Stats = () => {
                 fontSize="small"
               />
               <Typography sx={{ color: cpuTempColor }}>
-                {`${response.stats.cpuTempurature.toFixed(
+                {`${response.stats.cpu_temp.toFixed(
                   0
                 )}${String.fromCharCode(176)}C`}
               </Typography>
@@ -91,7 +91,7 @@ const Stats = () => {
             <ListItem disablePadding sx={{ paddingBottom: "7px" }}>
               <AutofpsSelectIcon sx={{ color: "white" }} fontSize="small" />
               <Typography variant="caption" sx={{ color: "white" }}>{`${(
-                response.stats.inferTime * 1000
+                response.stats.invoke_time * 1000
               ).toFixed(1)}ms`}</Typography>
             </ListItem>
           </Tooltip>

@@ -70,19 +70,19 @@ const SettingsModal = () => {
     (state) => state.data.dataServiceConnected
   );
   const [tempCameraOffset, setTempCameraOffset] = useState<Offset>({
-    x: 0.0,
-    y: 0.0,
-    z: 0.0,
+    off_x: 0.0,
+    off_y: 0.0,
+    off_z: 0.0,
     unit: "meters",
-    headingOffset: 0.0,
-    elevationOffset: 0.0,
+    heading_offset: 0.0,
+    elevation_offset: 0.0,
   });
   const [tempGpsOffset, setTempGpsOffset] = useState<Offset>({
-    x: 0.0,
-    y: 0.0,
-    z: 0.0,
+    off_x: 0.0,
+    off_y: 0.0,
+    off_z: 0.0,
     unit: "meters",
-    headingOffset: 0.0,
+    heading_offset: 0.0,
   });
   const [tempColorCorrection, setTempColorCorretion] = useState<ColorCorrection>({
     h: 0,
@@ -260,18 +260,18 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      x: parseFloat(e.target.value),
-                      y: tempCameraOffset.y,
-                      z: tempCameraOffset.z,
+                      off_x: parseFloat(e.target.value),
+                      off_y: tempCameraOffset.off_y,
+                      off_z: tempCameraOffset.off_z,
                       unit: "meters",
-                      headingOffset: tempCameraOffset.headingOffset,
-                      elevationOffset: tempCameraOffset.elevationOffset,
+                      heading_offset: tempCameraOffset.heading_offset,
+                      elevation_offset: tempCameraOffset.elevation_offset,
                     });
                   }}
                   id="camera-offset-x"
                   label="X (meters)"
                   variant="outlined"
-                  value={tempCameraOffset.x}
+                  value={tempCameraOffset.off_x}
                   InputProps={{
                     type: "number",
                   }}
@@ -282,18 +282,18 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      x: tempCameraOffset.x,
-                      y: parseFloat(e.target.value),
-                      z: tempCameraOffset.z,
+                      off_x: tempCameraOffset.off_x,
+                      off_y: parseFloat(e.target.value),
+                      off_z: tempCameraOffset.off_z,
                       unit: "meters",
-                      headingOffset: tempCameraOffset.headingOffset,
-                      elevationOffset: tempCameraOffset.elevationOffset,
+                      heading_offset: tempCameraOffset.heading_offset,
+                      elevation_offset: tempCameraOffset.elevation_offset,
                     });
                   }}
                   id="camera-offset-y"
                   label="Y (meters)"
                   variant="outlined"
-                  value={tempCameraOffset.y}
+                  value={tempCameraOffset.off_y}
                   InputProps={{
                     type: "number",
                   }}
@@ -304,18 +304,18 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      x: tempCameraOffset.x,
-                      y: tempCameraOffset.y,
-                      z: parseFloat(e.target.value),
+                      off_x: tempCameraOffset.off_x,
+                      off_y: tempCameraOffset.off_y,
+                      off_z: parseFloat(e.target.value),
                       unit: "meters",
-                      headingOffset: tempCameraOffset.headingOffset,
-                      elevationOffset: tempCameraOffset.elevationOffset,
+                      heading_offset: tempCameraOffset.heading_offset,
+                      elevation_offset: tempCameraOffset.elevation_offset,
                     });
                   }}
                   id="camera-offset-z"
                   label="Z (meters)"
                   variant="outlined"
-                  value={tempCameraOffset.z}
+                  value={tempCameraOffset.off_z}
                   InputProps={{
                     type: "number",
                   }}
@@ -326,18 +326,18 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      x: tempCameraOffset.x,
-                      y: tempCameraOffset.y,
-                      z: tempCameraOffset.z,
+                      off_x: tempCameraOffset.off_x,
+                      off_y: tempCameraOffset.off_y,
+                      off_z: tempCameraOffset.off_z,
                       unit: "meters",
-                      headingOffset: parseFloat(e.target.value),
-                      elevationOffset: tempCameraOffset.elevationOffset,
+                      heading_offset: parseFloat(e.target.value),
+                      elevation_offset: tempCameraOffset.elevation_offset,
                     });
                   }}
                   id="camera-offset-heading"
                   label="Heading (degrees)"
                   variant="outlined"
-                  value={tempCameraOffset.headingOffset}
+                  value={tempCameraOffset.heading_offset}
                   InputProps={{
                     type: "number",
                   }}
@@ -348,18 +348,18 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      x: tempCameraOffset.x,
-                      y: tempCameraOffset.y,
-                      z: tempCameraOffset.z,
+                      off_x: tempCameraOffset.off_x,
+                      off_y: tempCameraOffset.off_y,
+                      off_z: tempCameraOffset.off_z,
                       unit: "meters",
-                      headingOffset: tempCameraOffset.headingOffset,
-                      elevationOffset: parseFloat(e.target.value),
+                      heading_offset: tempCameraOffset.heading_offset,
+                      elevation_offset: parseFloat(e.target.value),
                     });
                   }}
                   id="camera-offset-elevation"
                   label="Elevation (degrees)"
                   variant="outlined"
-                  value={tempCameraOffset.elevationOffset}
+                  value={tempCameraOffset.elevation_offset}
                   InputProps={{
                     type: "number",
                   }}
@@ -370,7 +370,7 @@ const SettingsModal = () => {
                 <Button
                   onClick={() => {
                     dataService.setCameraOffset(
-                      `${tempCameraOffset.x.toString()},${tempCameraOffset.y.toString()},${tempCameraOffset.z.toString()},meters,${tempCameraOffset.headingOffset.toString()},${tempCameraOffset.elevationOffset.toString()}`
+                      `${tempCameraOffset.off_x.toString()},${tempCameraOffset.off_y.toString()},${tempCameraOffset.off_z.toString()},meters,${tempCameraOffset.heading_offset.toString()},${tempCameraOffset.elevation_offset.toString()}`
                     );
                     dataService.getCameraOffset();
                   }}
@@ -399,17 +399,17 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      x: parseFloat(e.target.value),
-                      y: tempGpsOffset.y,
-                      z: tempGpsOffset.z,
+                      off_x: parseFloat(e.target.value),
+                      off_y: tempGpsOffset.off_y,
+                      off_z: tempGpsOffset.off_z,
                       unit: "meters",
-                      headingOffset: tempGpsOffset.headingOffset,
+                      heading_offset: tempGpsOffset.heading_offset,
                     });
                   }}
                   id="gps-offset-x"
                   label="X (meters)"
                   variant="outlined"
-                  value={tempGpsOffset.x}
+                  value={tempGpsOffset.off_x}
                   InputProps={{
                     type: "number",
                   }}
@@ -420,17 +420,17 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      x: tempGpsOffset.x,
-                      y: parseFloat(e.target.value),
-                      z: tempGpsOffset.z,
+                      off_x: tempGpsOffset.off_x,
+                      off_y: parseFloat(e.target.value),
+                      off_z: tempGpsOffset.off_z,
                       unit: "meters",
-                      headingOffset: tempGpsOffset.headingOffset,
+                      heading_offset: tempGpsOffset.heading_offset,
                     });
                   }}
                   id="gps-offset-y"
                   label="Y (meters)"
                   variant="outlined"
-                  value={tempGpsOffset.y}
+                  value={tempGpsOffset.off_y}
                   InputProps={{
                     type: "number",
                   }}
@@ -441,17 +441,17 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      x: tempGpsOffset.x,
-                      y: tempGpsOffset.y,
-                      z: parseFloat(e.target.value),
+                      off_x: tempGpsOffset.off_x,
+                      off_y: tempGpsOffset.off_y,
+                      off_z: parseFloat(e.target.value),
                       unit: "meters",
-                      headingOffset: tempGpsOffset.headingOffset,
+                      heading_offset: tempGpsOffset.heading_offset,
                     });
                   }}
                   id="gps-offset-z"
                   label="Z (meters)"
                   variant="outlined"
-                  value={tempGpsOffset.z}
+                  value={tempGpsOffset.off_z}
                   InputProps={{
                     type: "number",
                   }}
@@ -462,17 +462,17 @@ const SettingsModal = () => {
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      x: tempGpsOffset.x,
-                      y: tempGpsOffset.y,
-                      z: tempGpsOffset.z,
+                      off_x: tempGpsOffset.off_x,
+                      off_y: tempGpsOffset.off_y,
+                      off_z: tempGpsOffset.off_z,
                       unit: "meters",
-                      headingOffset: parseFloat(e.target.value),
+                      heading_offset: parseFloat(e.target.value),
                     });
                   }}
                   id="gps-offset-z"
                   label="Heading (degrees)"
                   variant="outlined"
-                  value={tempGpsOffset.headingOffset}
+                  value={tempGpsOffset.heading_offset}
                   InputProps={{
                     type: "number",
                   }}
@@ -483,7 +483,7 @@ const SettingsModal = () => {
                 <Button
                   onClick={() => {
                     dataService.setGpsOffset(
-                      `${tempGpsOffset.x.toString()},${tempGpsOffset.y.toString()},${tempGpsOffset.z.toString()},meters,${tempGpsOffset.headingOffset.toString()}`
+                      `${tempGpsOffset.off_x.toString()},${tempGpsOffset.off_y.toString()},${tempGpsOffset.off_z.toString()},meters,${tempGpsOffset.heading_offset.toString()}`
                     );
                     dataService.getGpsOffset();
                   }}

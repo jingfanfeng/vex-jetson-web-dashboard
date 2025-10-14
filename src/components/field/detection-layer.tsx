@@ -33,19 +33,19 @@ const DetectionLayer = () => {
       {detections ? (
         <>
           {detections.map((detection) => {
-            const widthScale = scale * config.elements.size[detection.class].width * config.elements.size[detection.class].scale;
-            const heightScale = scale * config.elements.size[detection.class].height * config.elements.size[detection.class].scale;
+            const widthScale = scale * config.elements.size[detection.class_id].width * config.elements.size[detection.class_id].scale;
+            const heightScale = scale * config.elements.size[detection.class_id].height * config.elements.size[detection.class_id].scale;
             return (
               <>
                 {detection.depth !== -1 ? (
                   <Image
                     key={`${
-                      config.elements.label.text[detection.class]
+                      config.elements.label.text[detection.class_id]
                     }-${uuidv4()}`}
                     alt=""
-                    image={getImage(detection.class)}
-                    x={detection.mapLocation.x[0] * scale * config.elements.size[detection.class].scale}
-                    y={detection.mapLocation.y[0] * scale * -1 * config.elements.size[detection.class].scale}
+                    image={getImage(detection.class_id)}
+                    x={detection.map_location.x[0] * scale * config.elements.size[detection.class_id].scale}
+                    y={detection.map_location.y[0] * scale * -1 * config.elements.size[detection.class_id].scale}
                     z={detection.depth}
                     width={widthScale}
                     height={heightScale}

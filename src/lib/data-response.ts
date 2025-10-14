@@ -10,18 +10,18 @@ export interface DataResponse {
   depth?: Color;
   detections?: Detection[];
   position?: Position;
-  stats?: Stats;
+  stats?: Statistics;
   gpsOffset?: Offset;
   colorCorrection?: ColorCorrection;
 }
 
 export interface Offset {
-  x?: number;
-  y?: number;
-  z?: number;
+  off_x?: number;
+  off_y?: number;
+  off_z?: number;
   unit?: string;
-  headingOffset?: number;
-  elevationOffset?: number;
+  heading_offset?: number;
+  elevation_offset?: number;
 }
 
 export interface ColorCorrection {
@@ -42,11 +42,11 @@ export interface Image {
 }
 
 export interface Detection {
-  class?: number;
+  class_id?: number;
   prob?: number;
   depth?: number;
-  screenLocation?: ScreenLocation;
-  mapLocation?: MapLocation;
+  screen_location?: ScreenLocation;
+  map_location?: MapLocation;
 }
 
 export interface MapLocation {
@@ -73,14 +73,14 @@ export interface Position {
   connected?: boolean;
 }
 
-export interface Stats {
+export interface Statistics {
   fps?: number;
-  inferTime?: number;
-  videoWidth?: number;
-  videoHeight?: number;
-  runTime?: number;
-  gpsConnected?: boolean;
-  cpuTempurature?: number;
+  invoke_time?: number;
+  video_width?: number;
+  video_height?: number;
+  run_time?: number;
+  gps_connected?: boolean;
+  cpu_temp?: number;
 }
 
 export interface RawDetection {
@@ -96,7 +96,7 @@ export interface RawDetection {
 export interface RecordInputMap {
   Position: Position;
   Offset: Offset;
-  Stats: Stats;
+  Statistics: Statistics;
   ColorCorrection: ColorCorrection;
   Detection: Detection;
   ImageDetection: ScreenLocation;
@@ -104,7 +104,7 @@ export interface RecordInputMap {
   AIRecord: {
     position: Position;
     detections?: Detection[];
-    stats?: Stats;
+    stats?: Statistics;
     color?: Color;
     depth?: Color;
   };
@@ -115,7 +115,7 @@ export interface RecordInputMap {
 type RecordOutputMap = {
   Position: Position;
   Offset: Offset;
-  Stats: Stats;
+  Statistics: Statistics;
   ColorCorrection: ColorCorrection;
   Detection: Detection;
   ImageDetection: ScreenLocation;
@@ -326,7 +326,7 @@ const recordDecoders: {
   AIRecord: (record) => decodeAIRecord(record),
   Position: (record) => decodePosition(record),
   Offset: (record) => decodeOffset(record),
-  Stats: (record) => decodeStats(record),
+  Statistics: (record) => decodeStats(record),
   ColorCorrection: (record) => decodeColorCorrection(record),
   Detection: (record) => decodeDetection(record),
   ImageDetection: (record) => decodeScreenLocation(record),
@@ -378,8 +378,8 @@ const recordHandlers: {
       target.gpsOffset = offset;
     }
   },
-  Stats(target, record) {
-    const stats = recordDecoders.Stats(record);
+  Statistics(target, record) {
+    const stats = recordDecoders.Statistics(record);
     if (stats) {
       target.stats = stats;
     }
@@ -436,7 +436,7 @@ const recordEncoders: {
 } = {
   Position: (value) => encodePositionRecord(value),
   Offset: (value) => encodeOffsetRecord(value),
-  Stats: (value) => encodeStatsRecord(value),
+  Statistics: (value) => encodeStatsRecord(value),
   ColorCorrection: (value) => encodeColorCorrectionRecord(value),
   Detection: (value) => encodeDetectionRecord(value),
   ImageDetection: (value) => encodeImageDetectionRecord(value),
@@ -609,12 +609,12 @@ function decodeOffset(value: unknown): Offset | null {
   }
 
   return {
-    x: asNumber(readField(data, "x", "X", "off_x", "offX")),
-    y: asNumber(readField(data, "y", "Y", "off_y", "offY")),
-    z: asNumber(readField(data, "z", "Z", "off_z", "offZ")),
+    off_x: asNumber(readField(data, "x", "X", "off_x", "offX")),
+    off_y: asNumber(readField(data, "y", "Y", "off_y", "offY")),
+    off_z: asNumber(readField(data, "z", "Z", "off_z", "offZ")),
     unit: asString(readField(data, "unit")),
-    headingOffset: asNumber(readField(data, "heading_offset", "headingOffset")),
-    elevationOffset: asNumber(
+    heading_offset: asNumber(readField(data, "heading_offset", "headingOffset")),
+    elevation_offset: asNumber(
       readField(data, "elevation_offset", "elevationOffset")
     ),
   };
@@ -714,13 +714,13 @@ function decodeDetection(value: unknown): Detection | null {
   }
 
   const detection: Detection = {
-    class: asNumber(readField(data, "class", "class_id", "classId")),
+    class_id: asNumber(readField(data, "class", "class_id", "classId")),
     prob: asNumber(readField(data, "prob", "probability")),
     depth: asNumber(readField(data, "depth")),
-    screenLocation: decodeScreenLocation(
+    screen_location: decodeScreenLocation(
       readField(data, "screenLocation", "screen_location")
     ),
-    mapLocation: decodeMapLocation(
+    map_location: decodeMapLocation(
       readField(data, "mapLocation", "map_location")
     ),
   };
@@ -755,7 +755,7 @@ function decodeMapLocation(value: unknown): MapLocation | null {
   };
 }
 
-function decodeStats(value: unknown): Stats | null {
+function decodeStats(value: unknown): Statistics | null {
   const data = resolveRecord(value);
   if (!data) {
     return null;
@@ -763,18 +763,18 @@ function decodeStats(value: unknown): Stats | null {
 
   return {
     fps: asNumber(readField(data, "fps", "FPS")),
-    inferTime: asNumber(readField(data, "infer_time", "inferTime", "InferTime")),
-    videoWidth: asNumber(
+    invoke_time: asNumber(readField(data, "infer_time", "inferTime", "InferTime")),
+    video_width: asNumber(
       readField(data, "video_width", "videoWidth", "VideoWidth")
     ),
-    videoHeight: asNumber(
+    video_height: asNumber(
       readField(data, "video_height", "videoHeight", "VideoHeight")
     ),
-    runTime: asNumber(readField(data, "run_time", "runTime", "RunTime")),
-    gpsConnected: asBoolean(
+    run_time: asNumber(readField(data, "run_time", "runTime", "RunTime")),
+    gps_connected: asBoolean(
       readField(data, "gps_connected", "gpsConnected", "GPSConnected")
     ),
-    cpuTempurature: asNumber(
+    cpu_temp: asNumber(
       readField(data, "cpu_temp", "cpuTemp", "cpuTempurature", "CPUTempurature")
     ),
   };
@@ -795,24 +795,24 @@ function encodePositionRecord(position: Position): Record<string, unknown> {
 
 function encodeOffsetRecord(offset: Offset): Record<string, unknown> {
   return {
-    off_x: offset.x ?? 0,
-    off_y: offset.y ?? 0,
-    off_z: offset.z ?? 0,
+    off_x: offset.off_x ?? 0,
+    off_y: offset.off_y ?? 0,
+    off_z: offset.off_z ?? 0,
     unit: offset.unit ?? "",
-    heading_offset: offset.headingOffset ?? 0,
-    elevation_offset: offset.elevationOffset ?? 0,
+    heading_offset: offset.heading_offset ?? 0,
+    elevation_offset: offset.elevation_offset ?? 0,
   };
 }
 
-function encodeStatsRecord(stats: Stats): Record<string, unknown> {
+function encodeStatsRecord(stats: Statistics): Record<string, unknown> {
   return {
     fps: stats.fps ?? 0,
-    infer_time: stats.inferTime ?? 0,
-    video_width: stats.videoWidth ?? 0,
-    video_height: stats.videoHeight ?? 0,
-    run_time: stats.runTime ?? 0,
-    gps_connected: stats.gpsConnected ?? false,
-    cpu_temp: stats.cpuTempurature ?? 0,
+    infer_time: stats.invoke_time ?? 0,
+    video_width: stats.video_width ?? 0,
+    video_height: stats.video_height ?? 0,
+    run_time: stats.run_time ?? 0,
+    gps_connected: stats.gps_connected ?? false,
+    cpu_temp: stats.cpu_temp ?? 0,
   };
 }
 
@@ -828,8 +828,8 @@ function encodeColorCorrectionRecord(
 
 function encodeDetectionRecord(detection: Detection): Record<string, unknown> {
   const screen =
-    detection.screenLocation != null
-      ? encodeRecord("ImageDetection", detection.screenLocation)
+    detection.screen_location != null
+      ? encodeRecord("ImageDetection", detection.screen_location)
       : encodeRecord("ImageDetection", {
           x: 0,
           y: 0,
@@ -838,12 +838,12 @@ function encodeDetectionRecord(detection: Detection): Record<string, unknown> {
         });
 
   const map =
-    detection.mapLocation != null
-      ? encodeRecord("MapDetection", detection.mapLocation)
+    detection.map_location != null
+      ? encodeRecord("MapDetection", detection.map_location)
       : encodeRecord("MapDetection", { x: [], y: [], z: [] });
 
   return {
-    class_id: detection.class ?? 0,
+    class_id: detection.class_id ?? 0,
     probability: detection.prob ?? 0,
     depth: detection.depth ?? 0,
     screen_location: screen,
@@ -880,7 +880,7 @@ function encodeAIRecordRecord(
     detections: (record.detections ?? []).map((det) =>
       encodeRecord("Detection", det)
     ),
-    stats: record.stats ? encodeRecord("Stats", record.stats) : undefined,
+    stats: record.stats ? encodeRecord("Statistics", record.stats) : undefined,
     color: record.color ? encodeRecord("Color", record.color) : undefined,
     depth: record.depth ? encodeRecord("Color", record.depth) : undefined,
   };
