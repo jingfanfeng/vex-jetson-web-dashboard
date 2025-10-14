@@ -327,10 +327,13 @@ const recordDecoders: {
   Image: (record) => decodeImage(record),
 };
 
-const recordHandlers: Record<
-  RecordName,
-  (target: DataResponse, record: RecordEnvelope, originKey?: string) => void
-> = {
+const recordHandlers: {
+  [K in RecordName]: (
+    target: DataResponse,
+    record: RecordEnvelope<K>,
+    originKey?: string
+  ) => void;
+} = {
   AIRecord(target, record) {
     const partial = recordDecoders.AIRecord(record);
     if (partial) {
@@ -507,7 +510,9 @@ function mergeRecord(
   record: RecordEnvelope,
   originKey?: string
 ): void {
-  const handler = recordHandlers[record.name as RecordName];
+  const handler = recordHandlers[record.name as RecordName] as
+    | ((target: DataResponse, record: RecordEnvelope, originKey?: string) => void)
+    | undefined;
   if (handler) {
     handler(target, record, originKey);
   }
@@ -939,11 +944,8 @@ function readField(
   return undefined;
 }
 
-function assignDefined<T extends Record<string, unknown>>(
-  target: T,
-  partial: Partial<T>
-): void {
-  Object.entries(partial).forEach(([key, value]) => {
+function assignDefined<T extends object>(target: T, partial: Partial<T>): void {
+  Object.entries(partial as Record<string, unknown>).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       (target as Record<string, unknown>)[key] = value;
     }

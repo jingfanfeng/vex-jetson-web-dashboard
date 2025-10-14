@@ -1,4 +1,4 @@
-import { EventEmitter } from "events";
+import EventEmitter from "eventemitter3";
 import { io, Socket } from "socket.io-client";
 import { encode, decode } from "@msgpack/msgpack";
 import {
@@ -10,19 +10,19 @@ import {
 import { config } from "../util/config";
 import { commands } from "../lib/commands";
 
-export interface DataService {
-  on(event: "socketConnected", listener: () => void): this;
-  on(event: "message", listener: (message: DataResponse) => void): this;
-  on(event: "socketConnectionClosed", listener: () => void): this;
-  on(event: "getCameraOffset", listener: (message: Offset) => void): this;
-  on(event: "getGpsOffset", listener: (message: Offset) => void): this;
-  on(event: "getColorCorrection", listener: (message: ColorCorrection) => void): this;
-}
+type DataServiceEvents = {
+  socketConnected: () => void;
+  message: (message: DataResponse) => void;
+  socketConnectionClosed: () => void;
+  getCameraOffset: (message: Offset) => void;
+  getGpsOffset: (message: Offset) => void;
+  getColorCorrection: (message: ColorCorrection) => void;
+};
 
 /**
  * Service to get data from the websocket server on the AI module
  */
-export class DataService extends EventEmitter {
+export class DataService extends EventEmitter<DataServiceEvents> {
   private timer: NodeJS.Timeout | null;
   private socket: Socket | null;
   public command: string | null;
