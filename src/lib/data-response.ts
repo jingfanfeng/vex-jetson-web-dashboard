@@ -384,9 +384,9 @@ const typeMap: any = {
   ),
   Offset: o(
     [
-      { json: "x", js: "x", typ: u(undefined, 3.14) },
-      { json: "y", js: "y", typ: u(undefined, 3.14) },
-      { json: "z", js: "z", typ: u(undefined, 3.14) },
+      { json: "off_x", js: "x", typ: u(undefined, 3.14) },
+      { json: "off_y", js: "y", typ: u(undefined, 3.14) },
+      { json: "off_z", js: "z", typ: u(undefined, 3.14) },
       { json: "unit", js: "unit", typ: u(undefined, "") },
       { json: "heading_offset", js: "headingOffset", typ: u(undefined, 0) },
       { json: "elevation_offset", js: "elevationOffset", typ: u(undefined, 0) },
@@ -417,16 +417,16 @@ const typeMap: any = {
   ),
   Detection: o(
     [
-      { json: "class", js: "class", typ: u(undefined, 0) },
-      { json: "prob", js: "prob", typ: u(undefined, 3.14) },
+      { json: "class_id", js: "class", typ: u(undefined, 0) },
+      { json: "probability", js: "prob", typ: u(undefined, 3.14) },
       { json: "depth", js: "depth", typ: u(undefined, 3.14, NaN) },
       {
-        json: "screenLocation",
+        json: "screen_location",
         js: "screenLocation",
         typ: u(undefined, r("ScreenLocation")),
       },
       {
-        json: "mapLocation",
+        json: "map_location",
         js: "mapLocation",
         typ: u(undefined, r("MapLocation")),
       },
@@ -452,26 +452,26 @@ const typeMap: any = {
   ),
   Position: o(
     [
-      { json: "Status", js: "status", typ: u(undefined, 0) },
-      { json: "X", js: "x", typ: u(undefined, 0) },
-      { json: "Y", js: "y", typ: u(undefined, 0) },
-      { json: "Z", js: "z", typ: u(undefined, 0) },
-      { json: "Azimuth", js: "azimuth", typ: u(undefined, 0) },
-      { json: "Elevation", js: "elevation", typ: u(undefined, 0) },
-      { json: "Rotation", js: "rotation", typ: u(undefined, 0) },
-      { json: "Connected", js: "connected", typ: u(undefined, true) },
+      { json: "x", js: "x", typ: u(undefined, 0) },
+      { json: "y", js: "y", typ: u(undefined, 0) },
+      { json: "z", js: "z", typ: u(undefined, 0) },
+      { json: "status", js: "status", typ: u(undefined, 0) },
+      { json: "azimuth", js: "azimuth", typ: u(undefined, 0) },
+      { json: "elevation", js: "elevation", typ: u(undefined, 0) },
+      { json: "rotation", js: "rotation", typ: u(undefined, 0) },
+      { json: "connected", js: "connected", typ: u(undefined, true) },
     ],
     false
   ),
   Stats: o(
     [
-      { json: "FPS", js: "fps", typ: u(undefined, 3.14) },
-      { json: "InferTime", js: "inferTime", typ: u(undefined, 0) },
-      { json: "VideoWidth", js: "videoWidth", typ: u(undefined, 0) },
-      { json: "VideoHeight", js: "videoHeight", typ: u(undefined, 0) },
-      { json: "RunTime", js: "runTime", typ: u(undefined, 0) },
-      { json: "GPSConnected", js: "gpsConnected", typ: u(undefined, true) },
-      { json: "CPUTempurature", js: "cpuTempurature", typ: u(undefined, 0) },
+      { json: "fps", js: "fps", typ: u(undefined, 3.14) },
+      { json: "invoke_time", js: "inferTime", typ: u(undefined, 0) },
+      { json: "cpu_temp", js: "cpuTempurature", typ: u(undefined, 0) },
+      { json: "video_width", js: "videoWidth", typ: u(undefined, 0) },
+      { json: "video_height", js: "videoHeight", typ: u(undefined, 0) },
+      { json: "run_time", js: "runTime", typ: u(undefined, 0) },
+      { json: "gps_connected", js: "gpsConnected", typ: u(undefined, true) },
     ],
     false
   ),
