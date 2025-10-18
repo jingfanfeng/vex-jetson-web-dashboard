@@ -22,6 +22,8 @@ const DetectionLayer = ({ fieldWidth, fieldHeight }: DetectionLayerProps) => {
   const scale = useAppSelector((state) => state.app.scale);
   const [redPickup] = useImage(config.elements.textures[Element.BallRed]);
   const [bluePickup] = useImage(config.elements.textures[Element.BallBlue]);
+  void fieldWidth;
+  void fieldHeight;
 
   const getImage = (detectionClass: number) => {
     switch (detectionClass) {

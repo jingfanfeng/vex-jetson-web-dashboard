@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid } from "@mui/material";
+import { GridLegacy as Grid } from "@mui/material";
 import Field from "../components/field/field";
 import { commands } from "../lib/commands";
 import { useAppSelector } from "../state/hooks";

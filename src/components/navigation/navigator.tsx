@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { openSettings } from "../../state/app-slice";
 import SettingsModal from "../modals/settings-modal";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Grid, Toolbar, Tooltip } from "@mui/material";
+import { GridLegacy as Grid, Toolbar, Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { config } from "../../util/config";
 import Drawer from "@mui/material/Drawer";

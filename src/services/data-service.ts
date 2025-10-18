@@ -1,21 +1,21 @@
-import { EventEmitter } from "events";
+import EventEmitter from "eventemitter3";
 import { ColorCorrection, Convert, DataResponse, Offset } from "../lib/data-response";
 import { config } from "../util/config";
 import { commands } from "../lib/commands";
 
-export interface DataService {
-  on(event: "socketConnected", listener: () => void): this;
-  on(event: "message", listener: (message: DataResponse) => void): this;
-  on(event: "socketConnectionClosed", listener: () => void): this;
-  on(event: "getCameraOffset", listener: (message: Offset) => void): this;
-  on(event: "getGpsOffset", listener: (message: Offset) => void): this;
-  on(event: "getColorCorrection", listener: (message: ColorCorrection) => void): this;
-}
+type DataServiceEvents = {
+  socketConnected: [];
+  message: [DataResponse];
+  socketConnectionClosed: [];
+  getCameraOffset: [Offset];
+  getGpsOffset: [Offset];
+  getColorCorrection: [ColorCorrection];
+};
 
 /**
  * Service to get data from the websocket server on the AI module
  */
-export class DataService extends EventEmitter {
+export class DataService extends EventEmitter<DataServiceEvents> {
   private timer: NodeJS.Timeout;
   private socket: WebSocket;
   public command: string;
