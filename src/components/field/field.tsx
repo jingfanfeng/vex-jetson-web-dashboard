@@ -135,7 +135,10 @@ const Field = () => {
               </Layer>
 
               {/* Detections */}
-              <DetectionLayer />
+              <DetectionLayer
+                fieldWidth={ref.current ? ref.current["clientWidth"] : 1}
+                fieldHeight={ref.current ? ref.current["clientHeight"] : 1}
+              />
             </>
           ) : null}
         </Stage>

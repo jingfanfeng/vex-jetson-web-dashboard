@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Grid from "@mui/material/Grid";
+import { Grid } from "@mui/material";
 import Field from "../components/field/field";
 import { useAppSelector } from "../state/hooks";
 import { commands } from "../lib/commands";
@@ -21,10 +21,10 @@ const FieldAndCameraView = () => {
 
   return (
     <>
-      <Grid size={6} justifyContent="flex-end">
+      <Grid item xs={6} justifyContent="flex-end">
         <Field />
       </Grid>
-      <Grid size={6} justifyContent="flex-start">
+      <Grid item xs={6} justifyContent="flex-start">
         <ColorCamera />
       </Grid>
     </>

@@ -1,22 +1,11 @@
 import { Element } from "../lib/types";
 import { images } from "./images";
 
-function getDefaultSocketIP(): string {
-  const globalObj = globalThis as { location?: { hostname?: string | null } };
-  const hostname = globalObj.location?.hostname;
-
-  if (hostname && hostname !== "") {
-    return hostname;
-  }
-
-  return "10.42.0.1";
-}
-
 /**
  * General configuration for the application
  */
 export const config = {
-  socketIP: getDefaultSocketIP(),
+  socketIP: "10.42.0.1",
   socketPort: "3030",
 
   /**
@@ -33,7 +22,7 @@ export const config = {
    * Rate at which the data services polls for data (ms)
    */
   pollingInterval: 60,
-  logDataResponse: true,
+  logDataResponse: false,
   detectOutOfBoundsElements: true,
   colors: {
     red: "#D22630",

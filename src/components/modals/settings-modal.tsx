@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
 import {
+  Grid,
   Box,
   Modal,
   Typography,
@@ -70,19 +70,19 @@ const SettingsModal = () => {
     (state) => state.data.dataServiceConnected
   );
   const [tempCameraOffset, setTempCameraOffset] = useState<Offset>({
-    off_x: 0.0,
-    off_y: 0.0,
-    off_z: 0.0,
+    x: 0.0,
+    y: 0.0,
+    z: 0.0,
     unit: "meters",
-    heading_offset: 0.0,
-    elevation_offset: 0.0,
+    headingOffset: 0.0,
+    elevationOffset: 0.0,
   });
   const [tempGpsOffset, setTempGpsOffset] = useState<Offset>({
-    off_x: 0.0,
-    off_y: 0.0,
-    off_z: 0.0,
+    x: 0.0,
+    y: 0.0,
+    z: 0.0,
     unit: "meters",
-    heading_offset: 0.0,
+    headingOffset: 0.0,
   });
   const [tempColorCorrection, setTempColorCorretion] = useState<ColorCorrection>({
     h: 0,
@@ -145,7 +145,7 @@ const SettingsModal = () => {
     >
       <Box sx={style}>
         <Grid container spacing={2}>
-          <Grid size={12}>
+          <Grid item xs={12}>
             <Box sx={{ flexGrow: 1 }}>
               <Toolbar>
                 <Typography
@@ -180,7 +180,7 @@ const SettingsModal = () => {
               </Toolbar>
             </Box>
           </Grid>
-          <Grid size={6}>
+          <Grid item xs={6}>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -224,7 +224,7 @@ const SettingsModal = () => {
               />
             </FormGroup>
           </Grid>
-          <Grid size={6}>
+          <Grid item xs={6}>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -248,7 +248,7 @@ const SettingsModal = () => {
               />
             </FormGroup>
           </Grid>
-          <Grid size={12}>
+          <Grid item xs={12}>
             <Typography
               id="demo-radio-buttons-group-label"
               sx={{ color: theme.font, marginTop: 2 }}
@@ -256,121 +256,121 @@ const SettingsModal = () => {
               Camera Offset
             </Typography>
             <Grid container spacing={1}>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      off_x: parseFloat(e.target.value),
-                      off_y: tempCameraOffset.off_y,
-                      off_z: tempCameraOffset.off_z,
+                      x: parseFloat(e.target.value),
+                      y: tempCameraOffset.y,
+                      z: tempCameraOffset.z,
                       unit: "meters",
-                      heading_offset: tempCameraOffset.heading_offset,
-                      elevation_offset: tempCameraOffset.elevation_offset,
+                      headingOffset: tempCameraOffset.headingOffset,
+                      elevationOffset: tempCameraOffset.elevationOffset,
                     });
                   }}
                   id="camera-offset-x"
                   label="X (meters)"
                   variant="outlined"
-                  value={tempCameraOffset.off_x}
+                  value={tempCameraOffset.x}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      off_x: tempCameraOffset.off_x,
-                      off_y: parseFloat(e.target.value),
-                      off_z: tempCameraOffset.off_z,
+                      x: tempCameraOffset.x,
+                      y: parseFloat(e.target.value),
+                      z: tempCameraOffset.z,
                       unit: "meters",
-                      heading_offset: tempCameraOffset.heading_offset,
-                      elevation_offset: tempCameraOffset.elevation_offset,
+                      headingOffset: tempCameraOffset.headingOffset,
+                      elevationOffset: tempCameraOffset.elevationOffset,
                     });
                   }}
                   id="camera-offset-y"
                   label="Y (meters)"
                   variant="outlined"
-                  value={tempCameraOffset.off_y}
+                  value={tempCameraOffset.y}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      off_x: tempCameraOffset.off_x,
-                      off_y: tempCameraOffset.off_y,
-                      off_z: parseFloat(e.target.value),
+                      x: tempCameraOffset.x,
+                      y: tempCameraOffset.y,
+                      z: parseFloat(e.target.value),
                       unit: "meters",
-                      heading_offset: tempCameraOffset.heading_offset,
-                      elevation_offset: tempCameraOffset.elevation_offset,
+                      headingOffset: tempCameraOffset.headingOffset,
+                      elevationOffset: tempCameraOffset.elevationOffset,
                     });
                   }}
                   id="camera-offset-z"
                   label="Z (meters)"
                   variant="outlined"
-                  value={tempCameraOffset.off_z}
+                  value={tempCameraOffset.z}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      off_x: tempCameraOffset.off_x,
-                      off_y: tempCameraOffset.off_y,
-                      off_z: tempCameraOffset.off_z,
+                      x: tempCameraOffset.x,
+                      y: tempCameraOffset.y,
+                      z: tempCameraOffset.z,
                       unit: "meters",
-                      heading_offset: parseFloat(e.target.value),
-                      elevation_offset: tempCameraOffset.elevation_offset,
+                      headingOffset: parseFloat(e.target.value),
+                      elevationOffset: tempCameraOffset.elevationOffset,
                     });
                   }}
                   id="camera-offset-heading"
                   label="Heading (degrees)"
                   variant="outlined"
-                  value={tempCameraOffset.heading_offset}
+                  value={tempCameraOffset.headingOffset}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempCameraOffset({
-                      off_x: tempCameraOffset.off_x,
-                      off_y: tempCameraOffset.off_y,
-                      off_z: tempCameraOffset.off_z,
+                      x: tempCameraOffset.x,
+                      y: tempCameraOffset.y,
+                      z: tempCameraOffset.z,
                       unit: "meters",
-                      heading_offset: tempCameraOffset.heading_offset,
-                      elevation_offset: parseFloat(e.target.value),
+                      headingOffset: tempCameraOffset.headingOffset,
+                      elevationOffset: parseFloat(e.target.value),
                     });
                   }}
                   id="camera-offset-elevation"
                   label="Elevation (degrees)"
                   variant="outlined"
-                  value={tempCameraOffset.elevation_offset}
+                  value={tempCameraOffset.elevationOffset}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <Button
                   onClick={() => {
                     dataService.setCameraOffset(
-                      `${tempCameraOffset.off_x.toString()},${tempCameraOffset.off_y.toString()},${tempCameraOffset.off_z.toString()},meters,${tempCameraOffset.heading_offset.toString()},${tempCameraOffset.elevation_offset.toString()}`
+                      `${tempCameraOffset.x.toString()},${tempCameraOffset.y.toString()},${tempCameraOffset.z.toString()},meters,${tempCameraOffset.headingOffset.toString()},${tempCameraOffset.elevationOffset.toString()}`
                     );
                     dataService.getCameraOffset();
                   }}
@@ -395,95 +395,95 @@ const SettingsModal = () => {
               GPS Offset
             </Typography>
             <Grid container spacing={1}>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      off_x: parseFloat(e.target.value),
-                      off_y: tempGpsOffset.off_y,
-                      off_z: tempGpsOffset.off_z,
+                      x: parseFloat(e.target.value),
+                      y: tempGpsOffset.y,
+                      z: tempGpsOffset.z,
                       unit: "meters",
-                      heading_offset: tempGpsOffset.heading_offset,
+                      headingOffset: tempGpsOffset.headingOffset,
                     });
                   }}
                   id="gps-offset-x"
                   label="X (meters)"
                   variant="outlined"
-                  value={tempGpsOffset.off_x}
+                  value={tempGpsOffset.x}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      off_x: tempGpsOffset.off_x,
-                      off_y: parseFloat(e.target.value),
-                      off_z: tempGpsOffset.off_z,
+                      x: tempGpsOffset.x,
+                      y: parseFloat(e.target.value),
+                      z: tempGpsOffset.z,
                       unit: "meters",
-                      heading_offset: tempGpsOffset.heading_offset,
+                      headingOffset: tempGpsOffset.headingOffset,
                     });
                   }}
                   id="gps-offset-y"
                   label="Y (meters)"
                   variant="outlined"
-                  value={tempGpsOffset.off_y}
+                  value={tempGpsOffset.y}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      off_x: tempGpsOffset.off_x,
-                      off_y: tempGpsOffset.off_y,
-                      off_z: parseFloat(e.target.value),
+                      x: tempGpsOffset.x,
+                      y: tempGpsOffset.y,
+                      z: parseFloat(e.target.value),
                       unit: "meters",
-                      heading_offset: tempGpsOffset.heading_offset,
+                      headingOffset: tempGpsOffset.headingOffset,
                     });
                   }}
                   id="gps-offset-z"
                   label="Z (meters)"
                   variant="outlined"
-                  value={tempGpsOffset.off_z}
+                  value={tempGpsOffset.z}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <StyledTextField
                   onChange={(e) => {
                     setTempGpsOffset({
-                      off_x: tempGpsOffset.off_x,
-                      off_y: tempGpsOffset.off_y,
-                      off_z: tempGpsOffset.off_z,
+                      x: tempGpsOffset.x,
+                      y: tempGpsOffset.y,
+                      z: tempGpsOffset.z,
                       unit: "meters",
-                      heading_offset: parseFloat(e.target.value),
+                      headingOffset: parseFloat(e.target.value),
                     });
                   }}
                   id="gps-offset-z"
                   label="Heading (degrees)"
                   variant="outlined"
-                  value={tempGpsOffset.heading_offset}
+                  value={tempGpsOffset.headingOffset}
                   InputProps={{
                     type: "number",
                   }}
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <Button
                   onClick={() => {
                     dataService.setGpsOffset(
-                      `${tempGpsOffset.off_x.toString()},${tempGpsOffset.off_y.toString()},${tempGpsOffset.off_z.toString()},meters,${tempGpsOffset.heading_offset.toString()}`
+                      `${tempGpsOffset.x.toString()},${tempGpsOffset.y.toString()},${tempGpsOffset.z.toString()},meters,${tempGpsOffset.headingOffset.toString()}`
                     );
                     dataService.getGpsOffset();
                   }}
@@ -508,7 +508,7 @@ const SettingsModal = () => {
               Color Correction
             </Typography> */}
             <Grid container spacing={3}>
-              <Grid size="grow">
+              <Grid item xs>
                 <Typography
                 id="demo-radio-buttons-group-label"
                 sx={{ color: theme.font, marginTop: 2 }}
@@ -534,7 +534,7 @@ const SettingsModal = () => {
                   sx={{color: theme.control}}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <Typography
                   id="demo-radio-buttons-group-label"
                   sx={{ color: theme.font, marginTop: 2 }}
@@ -560,7 +560,7 @@ const SettingsModal = () => {
                     sx={{color: theme.control}}
                   />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <Typography
                   id="demo-radio-buttons-group-label"
                   sx={{ color: theme.font, marginTop: 2 }}
@@ -586,7 +586,7 @@ const SettingsModal = () => {
                     sx={{color: theme.control}}
                   />
               </Grid>
-              <Grid size="auto" marginRight={-13}>
+              <Grid item xs marginRight={-13}>
                 <Button
                   onClick={() => {
                     dataService.setColorCorrection(
@@ -607,7 +607,7 @@ const SettingsModal = () => {
                   Save
                 </Button>
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <Button
                   onClick={() => {
                     dataService.setColorCorrection(
@@ -630,9 +630,9 @@ const SettingsModal = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid size={12} sx={{ marginTop: 3 }}>
+          <Grid item xs={12} sx={{ marginTop: 3 }}>
             <Grid container spacing={1}>
-              <Grid>
+              <Grid item>
                 <StyledTextField
                   onChange={(e) => {
                     dispatch(setSocketIp(e.target.value));
@@ -645,7 +645,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid>
+              <Grid item>
                 <StyledTextField
                   onChange={(e) => {
                     dispatch(setSocketPort(e.target.value));
@@ -658,7 +658,7 @@ const SettingsModal = () => {
                   sx={{ marginTop: 1, input: { color: "#E0E3E7" } }}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid item xs>
                 <Button
                   onClick={() => {
                     dataService.ip = socketIp;

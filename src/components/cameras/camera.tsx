@@ -113,16 +113,16 @@ const Camera = ({ img, detections }: CameraProps) => {
                       img.height /
                       (ref.current ? ref.current["clientHeight"] : 1);
 
-                    const bboxWidth = detection.screen_location.width / widthRatio;
+                    const bboxWidth = detection.screenLocation.width / widthRatio;
                     const bboxHeight =
-                      detection.screen_location.height / heightRatio;
+                      detection.screenLocation.height / heightRatio;
 
                     const bboxX =
-                      (detection.screen_location.x *
+                      (detection.screenLocation.x *
                         (ref.current ? ref.current["clientWidth"] : 1)) /
                       config.SCALE_X;
                     const bboxY =
-                      (detection.screen_location.y *
+                      (detection.screenLocation.y *
                         (ref.current ? ref.current["clientHeight"] : 1)) /
                       config.SCALE_Y;
 
@@ -149,7 +149,7 @@ const Camera = ({ img, detections }: CameraProps) => {
                             <Text
                               fill={config.elements.label.textColors.white}
                               text={`${
-                                config.elements.label.text[detection.class_id]
+                                config.elements.label.text[detection.class]
                               }`}
                               x={bboxX}
                               y={bboxY - classBoxHeight}
@@ -167,10 +167,10 @@ const Camera = ({ img, detections }: CameraProps) => {
                               height={bboxHeight > 0 ? bboxHeight : 1}
                               width={bboxWidth > 0 ? bboxWidth : 1}
                               fill={
-                                config.elements.backgroundColors[detection.class_id]
+                                config.elements.backgroundColors[detection.class]
                               }
                               stroke={
-                                config.elements.borderColors[detection.class_id]
+                                config.elements.borderColors[detection.class]
                               }
                               strokeWidth={2}
                               cornerRadius={0}
@@ -178,9 +178,9 @@ const Camera = ({ img, detections }: CameraProps) => {
                             {/* coordinates */}
                             <Text
                               fill={config.elements.label.textColors.white}
-                              text={`X ${detection.map_location.x[0]
+                              text={`X ${detection.mapLocation.x[0]
                                 .toFixed(2)
-                                .toString()}m\nY ${detection.map_location.y[0]
+                                .toString()}m\nY ${detection.mapLocation.y[0]
                                 .toFixed(2)
                                 .toString()}m`}
                               align="left"
