@@ -154,6 +154,21 @@ const utf8Decoder =
 
 let decoderPatched = false;
 
+function isPossibleObj(
+  value: unknown[]
+): value is Array<[string | number, unknown]> {
+  if (value.length === 0) {
+    return false;
+  }
+
+  return value.every(
+    (entry) =>
+      Array.isArray(entry) &&
+      entry.length === 2 &&
+      (typeof entry[0] === "string" || typeof entry[0] === "number")
+  );
+}
+
 type DecodeBinaryFn = (
   this: Decoder,
   byteLength: number,
@@ -232,6 +247,14 @@ function normalize(value: unknown): unknown {
   }
 
   if (Array.isArray(value)) {
+    if (isPossibleObj(value)) {
+      const obj: Record<string, unknown> = {};
+      value.forEach(([key, nested]) => {
+        obj[String(key)] = normalize(nested);
+      });
+      return obj;
+    }
+
     return value.map(normalize);
   }
 
