@@ -1,11 +1,22 @@
 import { Element } from "../lib/types";
 import { images } from "./images";
 
+function getDefaultSocketIP(): string {
+  const globalObj = globalThis as { location?: { hostname?: string | null } };
+  const hostname = globalObj.location?.hostname;
+
+  if (hostname && hostname !== "") {
+    return hostname;
+  }
+
+  return "10.42.0.1";
+}
+
 /**
  * General configuration for the application
  */
 export const config = {
-  socketIP: "10.42.0.1",
+  socketIP: getDefaultSocketIP(),
   socketPort: "3030",
 
   /**
