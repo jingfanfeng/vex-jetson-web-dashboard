@@ -154,6 +154,30 @@ const utf8Decoder =
 
 let decoderPatched = false;
 
+function unwrapSocketMessagePayload(value: unknown): unknown {
+  let current: unknown = value;
+
+  while (Array.isArray(current) && current.length > 0) {
+    const [eventName, ...rest] = current;
+
+    if (typeof eventName !== "string") {
+      break;
+    }
+
+    if (eventName.toLowerCase() !== "message") {
+      break;
+    }
+
+    if (rest.length === 0) {
+      return null;
+    }
+
+    current = rest.length === 1 ? rest[0] : rest;
+  }
+
+  return current;
+}
+
 function isPossibleObj(
   value: unknown[]
 ): value is Array<[string | number, unknown]> {
@@ -215,7 +239,7 @@ export function deserializeDataResponse(payload: unknown): DataResponse | null {
     return null;
   }
 
-  const normalized = normalize(payload);
+  const normalized = normalize(unwrapSocketMessagePayload(payload));
   return buildDataResponse(normalized);
 }
 
@@ -488,6 +512,12 @@ function mergeKeyValue(target: DataResponse, key: string, value: unknown): void 
   switch (key) {
     case "Command":
     case "command":
+      if (value != null) {
+        target.command = String(value);
+      }
+      return;
+    case "Message":
+    case "message":
       if (value != null) {
         target.command = String(value);
       }
