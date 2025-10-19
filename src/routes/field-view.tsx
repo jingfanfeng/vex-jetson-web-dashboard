@@ -14,7 +14,7 @@ const FieldView = () => {
 
   useEffect(() => {
     if (dataService) {
-      dataService.command = `${commands.gPos},${commands.gDetect},${commands.gStats}`;
+      dataService.command = `${commands.gPos},${commands.gDetect},${commands.gStats},${commands.gMap}`;
     }
   }, [dataService]);
 

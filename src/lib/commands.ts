@@ -25,6 +25,11 @@ export const commands = {
   gDetect: "g_detect",
 
   /**
+   * Get grid map data
+   */
+  gMap: "g_map",
+
+  /**
    * Get Camera Offset
    */
   gGetCameraOffset: "get_camera_offset",

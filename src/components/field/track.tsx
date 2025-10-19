@@ -20,6 +20,10 @@ const Track = ({ fieldHeight, fieldWidth, direction }: TrackProps) => {
   const theme = useAppSelector((state) => state.settings.theme);
   const scale = useAppSelector((state) => state.app.scale);
 
+  if (!position) {
+    return null;
+  }
+
   return (
     <>
       {direction === Direction.X ? (

@@ -13,6 +13,7 @@ import Track from "./track";
 import { Direction } from "../../lib/types";
 import { setScale } from "../../state/app-slice";
 import { config } from "../../util/config";
+import GridCostLayer from "./grid-cost-layer";
 
 /**
  * Displays a top down view of the game field with visuals for detected elements and moving robot
@@ -27,6 +28,15 @@ const Field = () => {
   const showXYTracks = useAppSelector((state) => state.settings.showXYTracks);
   const showFog = useAppSelector((state) => state.settings.showFog);
   const dispatch = useAppDispatch();
+  const hasGrid =
+    response &&
+    response.map &&
+    response.map.size &&
+    response.map.size.width &&
+    response.map.size.height &&
+    response.map.tiles &&
+    response.map.tiles.length ===
+      response.map.size.width * response.map.size.height;
 
   /**
    * Update the field scale every time the field image is resized
@@ -68,15 +78,62 @@ const Field = () => {
           x={(ref.current ? ref.current["clientWidth"] : 1) / 2}
           y={(ref.current ? ref.current["clientHeight"] : 1) / 2}
         >
-          {response && response.position ? (
-            <>
-              <Layer>
-                <>
-                  {/* fog and fov */}
-                  {showFog === "true" ? (
-                    <>
-                      {/* fog */}
-                      <Fog
+          <>
+            {hasGrid ? <GridCostLayer /> : null}
+            {response && response.position ? (
+              <>
+                <Layer>
+                  <>
+                    {/* fog and fov */}
+                    {showFog === "true" ? (
+                      <>
+                        {/* fog */}
+                        <Fog
+                          fieldHeight={
+                            ref.current ? ref.current["clientHeight"] : 1
+                          }
+                          fieldWidth={
+                            ref.current ? ref.current["clientWidth"] : 1
+                          }
+                        />
+                        {/* fov */}
+                        <Fov
+                          fieldHeight={
+                            ref.current ? ref.current["clientHeight"] : 1
+                          }
+                        />
+                      </>
+                    ) : null}
+
+                    {/* xy tracks */}
+                    {showXYTracks === "true" ? (
+                      <>
+                        {/* y coordinates */}
+                        <Track
+                          fieldHeight={
+                            ref.current ? ref.current["clientHeight"] : 1
+                          }
+                          fieldWidth={
+                            ref.current ? ref.current["clientWidth"] : 1
+                          }
+                          direction={Direction.Y}
+                        />
+                        {/* x coordinates */}
+                        <Track
+                          fieldHeight={
+                            ref.current ? ref.current["clientHeight"] : 1
+                          }
+                          fieldWidth={
+                            ref.current ? ref.current["clientWidth"] : 1
+                          }
+                          direction={Direction.X}
+                        />
+                      </>
+                    ) : null}
+
+                    {/* compass */}
+                    {showCompass === "true" ? (
+                      <Compass
                         fieldHeight={
                           ref.current ? ref.current["clientHeight"] : 1
                         }
@@ -84,63 +141,21 @@ const Field = () => {
                           ref.current ? ref.current["clientWidth"] : 1
                         }
                       />
-                      {/* fov */}
-                      <Fov
-                        fieldHeight={
-                          ref.current ? ref.current["clientHeight"] : 1
-                        }
-                      />
-                    </>
-                  ) : null}
+                    ) : null}
 
-                  {/* xy tracks */}
-                  {showXYTracks === "true" ? (
-                    <>
-                      {/* y coordinates */}
-                      <Track
-                        fieldHeight={
-                          ref.current ? ref.current["clientHeight"] : 1
-                        }
-                        fieldWidth={
-                          ref.current ? ref.current["clientWidth"] : 1
-                        }
-                        direction={Direction.Y}
-                      />
-                      {/* x coordinates */}
-                      <Track
-                        fieldHeight={
-                          ref.current ? ref.current["clientHeight"] : 1
-                        }
-                        fieldWidth={
-                          ref.current ? ref.current["clientWidth"] : 1
-                        }
-                        direction={Direction.X}
-                      />
-                    </>
-                  ) : null}
+                    {/* robot */}
+                    <Robot />
+                  </>
+                </Layer>
 
-                  {/* compass */}
-                  {showCompass === "true" ? (
-                    <Compass
-                      fieldHeight={
-                        ref.current ? ref.current["clientHeight"] : 1
-                      }
-                      fieldWidth={ref.current ? ref.current["clientWidth"] : 1}
-                    />
-                  ) : null}
-
-                  {/* robot */}
-                  <Robot />
-                </>
-              </Layer>
-
-              {/* Detections */}
-              <DetectionLayer
-                fieldWidth={ref.current ? ref.current["clientWidth"] : 1}
-                fieldHeight={ref.current ? ref.current["clientHeight"] : 1}
-              />
-            </>
-          ) : null}
+                {/* Detections */}
+                <DetectionLayer
+                  fieldWidth={ref.current ? ref.current["clientWidth"] : 1}
+                  fieldHeight={ref.current ? ref.current["clientHeight"] : 1}
+                />
+              </>
+            ) : null}
+          </>
         </Stage>
       </div>
     </Box>

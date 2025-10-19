@@ -15,7 +15,7 @@ const FieldAndCameraView = () => {
 
   useEffect(() => {
     if (dataService) {
-      dataService.command = `${commands.gColor},${commands.gPos},${commands.gDetect},${commands.gStats}`;
+      dataService.command = `${commands.gColor},${commands.gPos},${commands.gDetect},${commands.gStats},${commands.gMap}`;
     }
   }, [dataService]);
 

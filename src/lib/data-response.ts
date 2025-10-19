@@ -22,6 +22,7 @@ export interface DataResponse {
   stats?: Stats;
   gpsOffset?: Offset;
   colorCorrection?: ColorCorrection;
+  map?: GridMap;
 }
 
 export interface Offset {
@@ -92,87 +93,21 @@ export interface Stats {
   cpuTempurature?: number;
 }
 
+export interface GridMap {
+  size?: GridSize;
+  tiles?: number[];
+}
+
+export interface GridSize {
+  width?: number;
+  height?: number;
+}
+
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
   public static toDataResponse(json: string): DataResponse {
     return cast(JSON.parse(json.replace(/\bNaN\b/g, "-1")), r("DataResponse")); // if depth field is NaN set it to -1
-  }
-
-  public static dataResponseToJson(value: DataResponse): string {
-    return JSON.stringify(uncast(value, r("DataResponse")), null, 2);
-  }
-
-  public static toOffset(json: string): Offset {
-    return cast(JSON.parse(json), r("Offset"));
-  }
-
-  public static offsetToJson(value: Offset): string {
-    return JSON.stringify(uncast(value, r("Offset")), null, 2);
-  }
-
-  public static toColorCorrection(json: string): ColorCorrection {
-    return cast(JSON.parse(json), r("ColorCorrection"));
-  }
-
-  public static colorCorrectionToJson(value: ColorCorrection): string {
-    return JSON.stringify(uncast(value, r("ColorCorrection")), null, 2);
-  }
-
-  public static toColor(json: string): Color {
-    return cast(JSON.parse(json), r("Color"));
-  }
-
-  public static colorToJson(value: Color): string {
-    return JSON.stringify(uncast(value, r("Color")), null, 2);
-  }
-
-  public static toImage(json: string): Image {
-    return cast(JSON.parse(json), r("Image"));
-  }
-
-  public static imageToJson(value: Image): string {
-    return JSON.stringify(uncast(value, r("Image")), null, 2);
-  }
-
-  public static toDetection(json: string): Detection {
-    return cast(JSON.parse(json), r("Detection"));
-  }
-
-  public static detectionToJson(value: Detection): string {
-    return JSON.stringify(uncast(value, r("Detection")), null, 2);
-  }
-
-  public static toMapLocation(json: string): MapLocation {
-    return cast(JSON.parse(json), r("MapLocation"));
-  }
-
-  public static mapLocationToJson(value: MapLocation): string {
-    return JSON.stringify(uncast(value, r("MapLocation")), null, 2);
-  }
-
-  public static toScreenLocation(json: string): ScreenLocation {
-    return cast(JSON.parse(json), r("ScreenLocation"));
-  }
-
-  public static screenLocationToJson(value: ScreenLocation): string {
-    return JSON.stringify(uncast(value, r("ScreenLocation")), null, 2);
-  }
-
-  public static toPosition(json: string): Position {
-    return cast(JSON.parse(json), r("Position"));
-  }
-
-  public static positionToJson(value: Position): string {
-    return JSON.stringify(uncast(value, r("Position")), null, 2);
-  }
-
-  public static toStats(json: string): Stats {
-    return cast(JSON.parse(json), r("Stats"));
-  }
-
-  public static statsToJson(value: Stats): string {
-    return JSON.stringify(uncast(value, r("Stats")), null, 2);
   }
 }
 
@@ -379,6 +314,7 @@ const typeMap: any = {
       { json: "Stats", js: "stats", typ: u(undefined, r("Stats")) },
       { json: "GpsOffset", js: "gpsOffset", typ: u(undefined, r("Offset")) },
       { json: "ColorCorrection", js: "colorCorrection", typ: u(undefined, r("ColorCorrection"))},
+      { json: "Map", js: "map", typ: u(undefined, r("GridMap")) },
     ],
     false
   ),
@@ -472,6 +408,20 @@ const typeMap: any = {
       { json: "video_height", js: "videoHeight", typ: u(undefined, 0) },
       { json: "run_time", js: "runTime", typ: u(undefined, 0) },
       { json: "gps_connected", js: "gpsConnected", typ: u(undefined, true) },
+    ],
+    false
+  ),
+  GridMap: o(
+    [
+      { json: "size", js: "size", typ: u(undefined, r("GridSize")) },
+      { json: "tiles", js: "tiles", typ: u(undefined, a(0)) },
+    ],
+    false
+  ),
+  GridSize: o(
+    [
+      { json: "width", js: "width", typ: u(undefined, 0) },
+      { json: "height", js: "height", typ: u(undefined, 0) },
     ],
     false
   ),
