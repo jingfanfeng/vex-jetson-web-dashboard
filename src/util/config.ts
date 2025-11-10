@@ -7,6 +7,11 @@ import { images } from "./images";
 export const config = {
   socketIP: typeof window !== "undefined" ? window.location.hostname : "10.42.0.1",
   socketPort: "3030",
+  stream: {
+    protocol: "http",
+    port: "8000",
+    path: "/stream/camera.m3u8",
+  },
 
   /**
    * Default image width captured by the camera on the robot

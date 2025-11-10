@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import ConnectingToCameraProgress from "./connecting-to-camera-progress";
 import { Detection, Image } from "../../lib/data-response";
@@ -9,10 +9,14 @@ import { config } from "../../util/config";
 import { PhotoCamera } from "@mui/icons-material";
 import Konva from "konva";
 import { Jimp } from "jimp";
+import useHls from "../../lib/use-hls";
 
 interface CameraProps {
-  img: Image;
-  detections: Detection[];
+  img?: Image;
+  detections?: Detection[];
+  streamUrl?: string;
+  frameWidth?: number;
+  frameHeight?: number;
 }
 
 interface SaveImageButtonProps {
@@ -38,11 +42,18 @@ const SaveImageButton = ({callback}: SaveImageButtonProps) => {
  * @param param0 Camera properties
  * @returns JSX.Element
  */
-const Camera = ({ img, detections }: CameraProps) => {
-  const ref: RefObject<HTMLImageElement> = useRef();
-  const canvasRef: RefObject<Konva.Stage> = useRef();
+const Camera = ({ img, detections, streamUrl, frameWidth, frameHeight }: CameraProps) => {
+  const imageRef = useRef<HTMLImageElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<Konva.Stage>(null);
   const { height } = useWindowDimensions();
   const [sorted, setSorted] = useState<Detection[]>(null);
+  const mediaRef = streamUrl ? videoRef : imageRef;
+  const sourceWidth = frameWidth ?? img?.width ?? 1;
+  const sourceHeight = frameHeight ?? img?.height ?? 1;
+  const canCaptureImage = Boolean(!streamUrl && img && img.data);
+
+  useHls(videoRef, streamUrl);
 
   /**
    * Sort the list of detections based on detection depth to get proper on screen layering on top of the displayed image
@@ -55,9 +66,12 @@ const Camera = ({ img, detections }: CameraProps) => {
 
   // To save image to disk, Kanva stage must be coverted to .png and overlaid on the original image
   const cameraButtonClicked = async () => {
-     if (canvasRef.current && ref.current) {
+     if (!canCaptureImage) {
+       return;
+     }
+     if (canvasRef.current && imageRef.current) {
       const canvasCopy: Konva.Stage = canvasRef.current.clone();
-      const cameraCopy = ref.current.src;
+      const cameraCopy = imageRef.current.src;
       const canvasImage = await Jimp.read(canvasCopy.toDataURL({mimeType: "image/png"}));
       const cameraImage = await Jimp.read(cameraCopy);
       cameraImage.resize({w: canvasImage.width, h: canvasImage.height})
@@ -75,9 +89,21 @@ const Camera = ({ img, detections }: CameraProps) => {
      }
   }
 
+  const mediaHeight =
+    mediaRef.current && mediaRef.current["clientHeight"]
+      ? mediaRef.current["clientHeight"]
+      : 1;
+  const mediaWidth =
+    mediaRef.current && mediaRef.current["clientWidth"]
+      ? mediaRef.current["clientWidth"]
+      : 1;
+  const widthRatio = sourceWidth > 0 && mediaWidth > 0 ? sourceWidth / mediaWidth : 1;
+  const heightRatio =
+    sourceHeight > 0 && mediaHeight > 0 ? sourceHeight / mediaHeight : 1;
+
   return (
     <Box>
-      {img ? (
+      {img || streamUrl ? (
         <Box>
           <div
             style={{
@@ -85,45 +111,54 @@ const Camera = ({ img, detections }: CameraProps) => {
               justifyContent: "center",
             }}
           >
-            {/* display the image */}
-            <img
-              alt=""
-              src={`data:image/png;base64,${img.data}`}
-              height="100%"
-              width="100%"
-              style={{
-                maxHeight: height - 50,
-                maxWidth: height * 1.35,
-              }}
-              ref={ref}
-            />
+            {/* display the media */}
+            {streamUrl ? (
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                playsInline
+                style={{
+                  maxHeight: height - 50,
+                  maxWidth: height * 1.35,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ) : (
+              <img
+                alt=""
+                src={`data:image/png;base64,${img.data}`}
+                height="100%"
+                width="100%"
+                style={{
+                  maxHeight: height - 50,
+                  maxWidth: height * 1.35,
+                }}
+                ref={imageRef}
+              />
+            )}
             {/* add the canvas stage for element detections on top of the image  */}
             <Stage
-              height={ref.current ? ref.current["clientHeight"] : 1} // using the image dimensions
-              width={ref.current ? ref.current["clientWidth"] : 1} // using the image dimensions
+              height={mediaHeight} // using the media dimensions
+              width={mediaWidth} // using the media dimensions
               style={{ position: "absolute" }}
               ref={canvasRef}
             >
               {sorted ? (
                 <>
                   {sorted.map((detection) => {
-                    const widthRatio =
-                      img.width / (ref.current ? ref.current["clientWidth"] : 1);
-                    const heightRatio =
-                      img.height /
-                      (ref.current ? ref.current["clientHeight"] : 1);
-
                     const bboxWidth = detection.screenLocation.width / widthRatio;
                     const bboxHeight =
                       detection.screenLocation.height / heightRatio;
 
                     const bboxX =
                       (detection.screenLocation.x *
-                        (ref.current ? ref.current["clientWidth"] : 1)) /
+                        mediaWidth) /
                       config.SCALE_X;
                     const bboxY =
                       (detection.screenLocation.y *
-                        (ref.current ? ref.current["clientHeight"] : 1)) /
+                        mediaHeight) /
                       config.SCALE_Y;
 
                     const classBoxWidth = bboxWidth;
@@ -216,9 +251,11 @@ const Camera = ({ img, detections }: CameraProps) => {
               ) : null}
             </Stage>
           </div>
-          <div>
-            <SaveImageButton callback={cameraButtonClicked}/>
-          </div>
+          {canCaptureImage ? (
+            <div>
+              <SaveImageButton callback={cameraButtonClicked}/>
+            </div>
+          ) : null}
         </Box>
       ) : (
         <ConnectingToCameraProgress />
