@@ -9,7 +9,7 @@ export const config = {
   socketPort: "3030",
   stream: {
     protocol: "http",
-    port: "8000",
+    port: "25565",
     path: "/stream/camera.m3u8",
   },
 
