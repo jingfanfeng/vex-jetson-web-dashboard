@@ -48,7 +48,8 @@ export interface Image {
   valid?: boolean;
   width?: number;
   height?: number;
-  data?: string;
+  data?: string | null;
+  streamAvailable?: boolean;
 }
 
 export interface Detection {
@@ -347,7 +348,8 @@ const typeMap: any = {
       { json: "Valid", js: "valid", typ: u(undefined, true) },
       { json: "Width", js: "width", typ: u(undefined, 0) },
       { json: "Height", js: "height", typ: u(undefined, 0) },
-      { json: "Data", js: "data", typ: u(undefined, "") },
+      { json: "Data", js: "data", typ: u(undefined, null, "") },
+      { json: "StreamAvailable", js: "streamAvailable", typ: u(undefined, true) },
     ],
     false
   ),
