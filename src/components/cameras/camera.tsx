@@ -9,7 +9,7 @@ import { config } from "../../util/config";
 import { PhotoCamera } from "@mui/icons-material";
 import Konva from "konva";
 import { Jimp } from "jimp";
-import useHls from "../../lib/use-hls";
+import useMediaSourceStream from "../../lib/use-media-source";
 
 interface CameraProps {
   img?: Image;
@@ -53,7 +53,7 @@ const Camera = ({ img, detections, streamUrl, frameWidth, frameHeight }: CameraP
   const sourceHeight = frameHeight ?? img?.height ?? 1;
   const canCaptureImage = Boolean(!streamUrl && img && img.data);
 
-  useHls(videoRef, streamUrl);
+  useMediaSourceStream(videoRef, streamUrl, config.stream?.mimeCodec);
 
   /**
    * Sort the list of detections based on detection depth to get proper on screen layering on top of the displayed image
